@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Frete</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            height: 80px;
+            max-width: 100%;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            font-weight: normal;
+        }
+
+        button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 15px;
+            border-left: 5px solid #4facfe;
+        }
+
+        .result h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .result-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .result-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4facfe;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .observation {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            color: #1565c0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .logo {
+                height: 60px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .result-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 120'%3E%3Cdefs%3E%3ClinearGradient id='textGrad' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' style='stop-color:%23333;stop-opacity:1' /%3E%3Cstop offset='70%25' style='stop-color:%23333;stop-opacity:1' /%3E%3Cstop offset='70%25' style='stop-color:%23e74c3c;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23c0392b;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='shadow' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeDropShadow dx='2' dy='2' stdDeviation='3' flood-color='%23000' flood-opacity='0.3'/%3E%3C/filter%3E%3C/defs%3E%3Ctext x='200' y='70' font-family='Arial Black, sans-serif' font-size='48' font-weight='900' text-anchor='middle' fill='url(%23textGrad)' filter='url(%23shadow)'%3ECalçados 24h%3C/text%3E%3C/svg%3E" alt="Calçados 24h" class="logo">
+            </div>
+            <h1>📦 Calculadora de Frete</h1>
+            <p>Sistema completo de cálculo de taxas de entrega</p>
+        </div>
+        
+        <div class="form-container">
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="devolucao" name="devolucao">
+                    <label for="devolucao">Esta venda foi uma devolução?</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="tipoVenda">Tipo de Venda:</label>
+                <select id="tipoVenda">
+                    <option value="">Selecione o tipo de venda</option>
+                    <option value="varejo">Varejo</option>
+                    <option value="atacado">Atacado - Caixa Alta</option>
+                    <option value="transportadora">Caixas para Transportadora</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="bairroGroup">
+                <label for="bairro">Bairro de Entrega:</label>
+                <select id="bairro">
+                    <option value="">Selecione o bairro</option>
+                    <optgroup label="Fortaleza - Bairros Específicos">
+                        <option value="aracape">Aracapé</option>
+                        <option value="arvoredo">Arvoredo</option>
+                        <option value="bonsucesso">Bonsucesso</option>
+                        <option value="canindezinho">Canindezinho</option>
+                        <option value="conjunto_esperanca">Conjunto Esperança</option>
+                        <option value="dende">Dendê</option>
+                        <option value="itaoca">Itaoca</option>
+                        <option value="itaperi">Itaperi</option>
+                        <option value="jardim_cearense">Jardim Cearense</option>
+                        <option value="jardim_fluminense">Jardim Fluminense</option>
+                        <option value="jose_walter">José Walter</option>
+                        <option value="manoel_satiro">Manoel Sátiro</option>
+                        <option value="maraponga">Maraponga</option>
+                        <option value="mondubim">Mondubim</option>
+                        <option value="novo_mondubim">Novo Mondubim</option>
+                        <option value="parangaba">Parangaba</option>
+                        <option value="parque_dois_irmaos">Parque Dois Irmãos</option>
+                        <option value="parque_santana">Parque Santana</option>
+                        <option value="parque_santa_rosa">Parque Santa Rosa</option>
+                        <option value="parque_sao_jose">Parque São José</option>
+                        <option value="passare">Passaré</option>
+                        <option value="planalto_ayrton_senna">Planalto Ayrton Senna</option>
+                        <option value="raquel_queiroz">Raquel de Queiroz</option>
+                        <option value="serrinha">Serrinha</option>
+                        <option value="vila_pery">Vila Pery</option>
+                        <option value="demais_bairros">Demais Bairros (Fortaleza)</option>
+                    </optgroup>
+                    <optgroup label="Região Metropolitana">
+                        <option value="caucaia">Caucaia</option>
+                        <option value="capua">Capuã</option>
+                        <option value="guajiru">Guajirú</option>
+                        <option value="pacheco">Pacheco</option>
+                        <option value="garrote">Garrote</option>
+                        <option value="icarai">Icaraí</option>
+                        <option value="tabuba">Tabuba</option>
+                        <option value="cumbuco">Cumbuco</option>
+                        <option value="maracanau">Maracanaú</option>
+                        <option value="pajucara">Pajuçara</option>
+                        <option value="industrial">Industrial</option>
+                        <option value="alto_alegre">Alto Alegre</option>
+                        <option value="cidade_nova">Cidade Nova</option>
+                        <option value="pacatuba">Pacatuba</option>
+                        <option value="maranguape">Maranguape</option>
+                        <option value="eusebio_centro">Eusébio até Centro</option>
+                        <option value="eusebio_apos_centro">Eusébio após Centro</option>
+                        <option value="ancuri">Ancuri</option>
+                        <option value="pedras">Pedras</option>
+                        <option value="itaitinga_22km">Itaitinga até 22km</option>
+                        <option value="itaitinga_apos_22km">Itaitinga após 22km</option>
+                        <option value="camara">Camará</option>
+                        <option value="aquiraz">Aquiraz</option>
+                        <option value="patacas">Patacas</option>
+                    </optgroup>
+                    <option value="demais_regioes">Demais Regiões</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="quantidadeGroup" style="display: none;">
+                <label for="quantidade">Quantidade de Pares:</label>
+                <input type="number" id="quantidade" min="1" placeholder="Digite a quantidade de pares">
+            </div>
+
+            <div class="form-group" id="valorGroup" style="display: none;">
+                <label for="valor">Valor do Pedido (R$):</label>
+                <input type="number" id="valor" step="0.01" min="0" placeholder="Digite o valor do pedido">
+            </div>
+
+            <div class="form-group" id="tipoTaxaGroup" style="display: none;">
+                <label for="tipoTaxa">Tipo de Taxa:</label>
+                <select id="tipoTaxa">
+                    <option value="">Selecione o tipo de taxa</option>
+                    <option value="entregador">Taxa do Entregador</option>
+                    <option value="site">Taxa Pedido Site</option>
+                    <option value="troca">Taxa da Troca (Cliente/Entregador)</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="dropshippingGroup" style="display: none;">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="dropshipping" name="dropshipping">
+                    <label for="dropshipping">Primeiro pedido saiu da loja para cliente Dropshipping?</label>
+                </div>
+            </div>
+
+            <button onclick="calcularFrete()">🔍 Calcular</button>
+
+            <div id="resultado" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const taxasBairros = {
+            // Fortaleza - Bairros específicos R$ 12,00
+            aracape: { entregador: 12, site: 10, troca: 10 },
+            bonsucesso: { entregador: 12, site: 10, troca: 10 },
+            canindezinho: { entregador: 12, site: 10, troca: 10 },
+            itaoca: { entregador: 12, site: 10, troca: 10 },
+            itaperi: { entregador: 12, site: 10, troca: 10 },
+            jardim_fluminense: { entregador: 12, site: 10, troca: 10 },
+            jose_walter: { entregador: 12, site: 10, troca: 10 },
+            parangaba: { entregador: 12, site: 10, troca: 10 },
+            parque_dois_irmaos: { entregador: 12, site: 10, troca: 10 },
+            parque_santa_rosa: { entregador: 12, site: 10, troca: 10 },
+            parque_sao_jose: { entregador: 12, site: 10, troca: 10 },
+            passare: { entregador: 12, site: 10, troca: 10 },
+            raquel_queiroz: { entregador: 12, site: 10, troca: 10 },
+            serrinha: { entregador: 12, site: 10, troca: 10 },
+            vila_pery: { entregador: 12, site: 10, troca: 10 },
+            
+            // Fortaleza - Bairros específicos R$ 10,00
+            arvoredo: { entregador: 10, site: 10, troca: 10 },
+            conjunto_esperanca: { entregador: 10, site: 10, troca: 10 },
+            dende: { entregador: 10, site: 10, troca: 10 },
+            jardim_cearense: { entregador: 10, site: 10, troca: 10 },
+            manoel_satiro: { entregador: 10, site: 10, troca: 10 },
+            maraponga: { entregador: 10, site: 10, troca: 10 },
+            mondubim: { entregador: 10, site: 10, troca: 10 },
+            novo_mondubim: { entregador: 10, site: 10, troca: 10 },
+            parque_santana: { entregador: 10, site: 10, troca: 10 },
+            planalto_ayrton_senna: { entregador: 10, site: 10, troca: 10 },
+            
+            // Demais bairros Fortaleza
+            demais_bairros: { entregador: 15, site: 12, troca: 10 },
+            
+            // Região Metropolitana
+            caucaia: { entregador: 20, site: 17, troca: 15 },
+            capua: { entregador: 25, site: null, troca: 20 },
+            guajiru: { entregador: 25, site: null, troca: 20 },
+            pacheco: { entregador: 25, site: null, troca: 20 },
+            garrote: { entregador: 30, site: null, troca: 20 },
+            icarai: { entregador: 30, site: null, troca: 25 },
+            tabuba: { entregador: 35, site: null, troca: 30 },
+            cumbuco: { entregador: 40, site: null, troca: 35 },
+            maracanau: { entregador: 20, site: 15.90, troca: 15 },
+            pajucara: { entregador: 15, site: 12, troca: 10 },
+            industrial: { entregador: 10, site: 12, troca: 10 },
+            alto_alegre: { entregador: 12, site: 12, troca: 10 },
+            cidade_nova: { entregador: 12, site: 12, troca: 10 },
+            pacatuba: { entregador: 25, site: null, troca: 20 },
+            maranguape: { entregador: 25, site: null, troca: 20 },
+            eusebio_centro: { entregador: 20, site: 17, troca: 15 },
+            eusebio_apos_centro: { entregador: 25, site: 17, troca: 20 },
+            ancuri: { entregador: 20, site: 17, troca: 15 },
+            pedras: { entregador: 20, site: 17, troca: 15 },
+            itaitinga_22km: { entregador: 20, site: null, troca: 15 },
+            itaitinga_apos_22km: { entregador: 30, site: null, troca: 25 },
+            camara: { entregador: 30, site: null, troca: 25 },
+            aquiraz: { entregador: 30, site: null, troca: 25 },
+            patacas: { entregador: 40, site: null, troca: 35 }
+        };
+
+        const taxasAtacado = {
+            "1-2": { entregador: 12, troca: 10 },
+            "3-8": { entregador: 15, troca: 10 },
+            "9-11": { entregador: 20, troca: 10 }
+        };
+
+        const taxasTransportadora = {
+            "12-18": { entregador: 25, troca: null },
+            "19-35": { entregador: 30, troca: null },
+            "36+": { entregador: null, troca: null }
+        };
+
+        document.getElementById('tipoVenda').addEventListener('change', function() {
+            const tipo = this.value;
+            const quantideGroup = document.getElementById('quantidadeGroup');
+            const valorGroup = document.getElementById('valorGroup');
+            const dropshippingGroup = document.getElementById('dropshippingGroup');
+            const bairroGroup = document.getElementById('bairroGroup');
+            const tipoTaxaGroup = document.getElementById('tipoTaxaGroup');
+            
+            if (tipo === 'atacado') {
+                quantideGroup.style.display = 'block';
+                valorGroup.style.display = 'none';
+                dropshippingGroup.style.display = 'block';
+                bairroGroup.style.display = 'none';
+                tipoTaxaGroup.style.display = 'block';
+            } else if (tipo === 'transportadora') {
+                quantideGroup.style.display = 'block';
+                valorGroup.style.display = 'none';
+                dropshippingGroup.style.display = 'none';
+                bairroGroup.style.display = 'none';
+                tipoTaxaGroup.style.display = 'block';
+            } else if (tipo === 'varejo') {
+                quantideGroup.style.display = 'none';
+                valorGroup.style.display = 'none';
+                dropshippingGroup.style.display = 'none';
+                bairroGroup.style.display = 'block';
+                tipoTaxaGroup.style.display = 'block';
+            } else {
+                quantideGroup.style.display = 'none';
+                valorGroup.style.display = 'none';
+                dropshippingGroup.style.display = 'none';
+                bairroGroup.style.display = 'none';
+                tipoTaxaGroup.style.display = 'none';
+            }
+        });
+
+        function calcularFrete() {
+            const devolucao = document.getElementById('devolucao').checked;
+            const tipoVenda = document.getElementById('tipoVenda').value;
+            const bairro = document.getElementById('bairro').value;
+            const quantidade = parseInt(document.getElementById('quantidade').value) || 0;
+            const valor = parseFloat(document.getElementById('valor').value) || 0;
+            const dropshipping = document.getElementById('dropshipping').checked;
+            const tipoTaxa = document.getElementById('tipoTaxa').value;
+            
+            let resultado = document.getElementById('resultado');
+            let html = '';
+
+            if (devolucao) {
+                html = `
+                    <div class="result">
+                        <h3>💸 Resultado - Devolução</h3>
+                        <div class="result-item">
+                            <span class="result-label">Taxa do Entregador:</span>
+                            <span class="result-value">Valor do Frete</span>
+                        </div>
+                        <div class="observation">
+                            <strong>📝 Observação:</strong> Cobrar taxa da vendedora
+                        </div>
+                    </div>
+                `;
+            } else if (tipoVenda === 'varejo') {
+                if (!bairro) {
+                    alert('Por favor, selecione o bairro de entrega.');
+                    return;
+                }
+
+                if (!tipoTaxa) {
+                    alert('Por favor, selecione o tipo de taxa.');
+                    return;
+                }
+
+                const taxas = taxasBairros[bairro];
+                if (!taxas) {
+                    html = `
+                        <div class="result">
+                            <h3>📍 Demais Regiões</h3>
+                            <div class="warning">
+                                <strong>⚠️ ATENÇÃO:</strong> Para demais regiões, consultar KM e fechar o frete antes de enviar o pedido.
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    let valorTaxa = 0;
+                    let nomeTaxa = '';
+
+                    switch(tipoTaxa) {
+                        case 'entregador':
+                            valorTaxa = taxas.entregador;
+                            nomeTaxa = 'Taxa do Entregador';
+                            break;
+                        case 'site':
+                            if (taxas.site !== null) {
+                                valorTaxa = taxas.site;
+                                nomeTaxa = 'Taxa Pedido Site';
+                            } else {
+                                html = `
+                                    <div class="result">
+                                        <h3>⚠️ Taxa não disponível</h3>
+                                        <div class="warning">
+                                            Taxa Pedido Site não disponível para este bairro
+                                        </div>
+                                    </div>
+                                `;
+                                resultado.innerHTML = html;
+                                resultado.style.display = 'block';
+                                return;
+                            }
+                            break;
+                        case 'troca':
+                            valorTaxa = taxas.troca;
+                            nomeTaxa = 'Taxa da Troca (Cliente/Entregador)';
+                            break;
+                    }
+
+                    html = `
+                        <div class="result">
+                            <h3>💰 Resultado do Cálculo</h3>
+                            <div class="result-item">
+                                <span class="result-label">${nomeTaxa}:</span>
+                                <span class="result-value">R$ ${valorTaxa.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            } else if (tipoVenda === 'atacado') {
+                if (quantidade === 0) {
+                    alert('Por favor, informe a quantidade de pares.');
+                    return;
+                }
+
+                if (!tipoTaxa) {
+                    alert('Por favor, selecione o tipo de taxa.');
+                    return;
+                }
+
+                let faixa;
+                if (quantidade <= 2) faixa = "1-2";
+                else if (quantidade <= 8) faixa = "3-8";
+                else if (quantidade <= 11) faixa = "9-11";
+
+                if (faixa) {
+                    const taxas = taxasAtacado[faixa];
+                    let valorTaxa = 0;
+                    let nomeTaxa = '';
+
+                    switch(tipoTaxa) {
+                        case 'entregador':
+                            valorTaxa = taxas.entregador;
+                            // Aplicar regra do dropshipping
+                            if (quantidade <= 2 && !dropshipping) {
+                                valorTaxa = 15;
+                            }
+                            nomeTaxa = 'Taxa do Entregador';
+                            break;
+                        case 'site':
+                            html = `
+                                <div class="result">
+                                    <h3>⚠️ Taxa não disponível</h3>
+                                    <div class="warning">
+                                        Taxa Pedido Site não disponível para Atacado
+                                    </div>
+                                </div>
+                            `;
+                            resultado.innerHTML = html;
+                            resultado.style.display = 'block';
+                            return;
+                        case 'troca':
+                            valorTaxa = taxas.troca;
+                            nomeTaxa = 'Taxa da Troca (Cliente/Entregador)';
+                            break;
+                    }
+
+                    html = `
+                        <div class="result">
+                            <h3>📦 Resultado - Atacado (${quantidade} pares)</h3>
+                            <div class="result-item">
+                                <span class="result-label">${nomeTaxa}:</span>
+                                <span class="result-value">R$ ${valorTaxa.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    `;
+
+                    if (quantidade <= 2 && tipoTaxa === 'entregador') {
+                        html += `
+                            <div class="observation">
+                                <strong>📝 Observação:</strong> Será cobrado R$ 10,00 somente se o primeiro pedido sair da loja para o cliente Dropshipping. Se o primeiro pedido não sair da loja, a taxa será R$ 15,00.
+                            </div>
+                        `;
+                    }
+                } else {
+                    html = `
+                        <div class="result">
+                            <h3>⚠️ Quantidade inválida para Atacado</h3>
+                            <div class="warning">
+                                Quantidade máxima para atacado: 11 pares
+                            </div>
+                        </div>
+                    `;
+                }
+            } else if (tipoVenda === 'transportadora') {
+                if (quantidade === 0) {
+                    alert('Por favor, informe a quantidade de pares.');
+                    return;
+                }
+
+                if (!tipoTaxa) {
+                    alert('Por favor, selecione o tipo de taxa.');
+                    return;
+                }
+
+                let faixa;
+                if (quantidade >= 12 && quantidade <= 18) faixa = "12-18";
+                else if (quantidade >= 19 && quantidade <= 35) faixa = "19-35";
+                else if (quantidade >= 36) faixa = "36+";
+
+                if (faixa === "36+") {
+                    html = `
+                        <div class="result">
+                            <h3>📋 Caixas para Transportadora (${quantidade} pares)</h3>
+                            <div class="warning">
+                                <strong>⚠️ ACIMA DE 35 PARES:</strong> Taxa a definir - consultar antes de enviar
+                            </div>
+                        </div>
+                    `;
+                } else if (faixa) {
+                    const taxas = taxasTransportadora[faixa];
+                    
+                    if (tipoTaxa === 'entregador') {
+                        html = `
+                            <div class="result">
+                                <h3>📋 Caixas para Transportadora (${quantidade} pares)</h3>
+                                <div class="result-item">
+                                    <span class="result-label">Taxa do Entregador:</span>
+                                    <span class="result-value">R$ ${taxas.entregador.toFixed(2)}</span>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        html = `
+                            <div class="result">
+                                <h3>⚠️ Taxa não disponível</h3>
+                                <div class="warning">
+                                    Apenas Taxa do Entregador disponível para Transportadora
+                                </div>
+                            </div>
+                        `;
+                    }
+                } else {
+                    html = `
+                        <div class="result">
+                            <h3>⚠️ Quantidade inválida para Transportadora</h3>
+                            <div class="warning">
+                                Quantidade mínima para transportadora: 12 pares
+                            </div>
+                        </div>
+                    `;
+                }
+            } else {
+                alert('Por favor, selecione o tipo de venda.');
+                return;
+            }
+
+            resultado.innerHTML = html;
+            resultado.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
