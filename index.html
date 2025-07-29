@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Frete</title>
+    <title>Calculadora de Motoboy</title>
     <style>
         * {
             margin: 0;
@@ -12,37 +12,39 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
             min-height: 100vh;
             padding: 20px;
+            color: #2c3e50;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             overflow: hidden;
         }
 
         .header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             color: white;
             text-align: center;
-            padding: 30px;
+            padding: 40px 30px;
         }
 
         .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
         .header p {
-            font-size: 1.1rem;
+            font-size: 1rem;
             opacity: 0.9;
+            font-weight: 300;
         }
 
         .logo-container {
@@ -50,9 +52,9 @@
         }
 
         .logo {
-            height: 80px;
+            height: 70px;
             max-width: 100%;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+            filter: brightness(0) invert(1);
         }
 
         .form-container {
@@ -66,87 +68,101 @@
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
-            color: #333;
-            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.95rem;
         }
 
-        select, input {
+        select, input[type="number"] {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #e1e5e9;
-            border-radius: 10px;
-            font-size: 1rem;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
             background: white;
+            color: #2c3e50;
         }
 
-        select:focus, input:focus {
+        select:focus, input[type="number"]:focus {
             outline: none;
-            border-color: #4facfe;
-            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
 
         .checkbox-group {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 20px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
         }
 
         .checkbox-group input[type="checkbox"] {
-            width: auto;
+            width: 18px;
+            height: 18px;
             margin: 0;
+            accent-color: #3498db;
         }
 
         .checkbox-group label {
             margin: 0;
-            font-weight: normal;
+            font-weight: 500;
+            color: #2c3e50;
         }
 
         button {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 16px;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            font-weight: bold;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
         }
 
         .result {
             margin-top: 30px;
             padding: 25px;
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            border-radius: 15px;
-            border-left: 5px solid #4facfe;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #3498db;
         }
 
         .result h3 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            font-weight: 600;
         }
 
         .result-item {
             background: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 10px;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #e9ecef;
         }
 
         .result-item:last-child {
@@ -154,53 +170,74 @@
         }
 
         .result-label {
-            font-weight: bold;
-            color: #555;
+            font-weight: 600;
+            color: #2c3e50;
         }
 
         .result-value {
             font-size: 1.2rem;
-            font-weight: bold;
-            color: #4facfe;
+            font-weight: 700;
+            color: #27ae60;
         }
 
         .warning {
             background: #fff3cd;
             border: 1px solid #ffeaa7;
             color: #856404;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 16px;
+            border-radius: 8px;
             margin-top: 15px;
-            font-weight: bold;
+            font-weight: 500;
         }
 
         .observation {
             background: #e3f2fd;
             border: 1px solid #90caf9;
             color: #1565c0;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 16px;
+            border-radius: 8px;
             margin-top: 15px;
+            font-weight: 500;
+        }
+
+        .info-box {
+            background: #f0f4f8;
+            border: 1px solid #cbd5e0;
+            color: #2d3748;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.9rem;
         }
 
         @media (max-width: 768px) {
             .header h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             
             .logo {
-                height: 60px;
+                height: 50px;
             }
             
             .form-container {
-                padding: 20px;
+                padding: 25px;
             }
             
             .result-item {
                 flex-direction: column;
                 text-align: center;
-                gap: 10px;
+                gap: 8px;
             }
+        }
+
+        /* Estilo para optgroups */
+        optgroup {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        option {
+            padding: 8px;
         }
     </style>
 </head>
@@ -208,10 +245,10 @@
     <div class="container">
         <div class="header">
             <div class="logo-container">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 120'%3E%3Cdefs%3E%3ClinearGradient id='textGrad' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' style='stop-color:%23333;stop-opacity:1' /%3E%3Cstop offset='70%25' style='stop-color:%23333;stop-opacity:1' /%3E%3Cstop offset='70%25' style='stop-color:%23e74c3c;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23c0392b;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='shadow' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeDropShadow dx='2' dy='2' stdDeviation='3' flood-color='%23000' flood-opacity='0.3'/%3E%3C/filter%3E%3C/defs%3E%3Ctext x='200' y='70' font-family='Arial Black, sans-serif' font-size='48' font-weight='900' text-anchor='middle' fill='url(%23textGrad)' filter='url(%23shadow)'%3ECalçados 24h%3C/text%3E%3C/svg%3E" alt="Calçados 24h" class="logo">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 120'%3E%3Cdefs%3E%3ClinearGradient id='textGrad' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' style='stop-color:%23ffffff;stop-opacity:1' /%3E%3Cstop offset='68%25' style='stop-color:%23ffffff;stop-opacity:1' /%3E%3Cstop offset='68%25' style='stop-color:%23ff4757;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ff3742;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='shadow' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeDropShadow dx='1' dy='2' stdDeviation='2' flood-color='%23000' flood-opacity='0.2'/%3E%3C/filter%3E%3C/defs%3E%3Ctext x='200' y='70' font-family='Arial Black, Arial, sans-serif' font-size='50' font-weight='900' text-anchor='middle' fill='url(%23textGrad)' filter='url(%23shadow)'%3ECalçados 24h%3C/text%3E%3C/svg%3E" alt="Calçados 24h" class="logo">
             </div>
-            <h1>📦 Calculadora de Frete</h1>
-            <p>Sistema completo de cálculo de taxas de entrega</p>
+            <h1>🏍️ Calculadora de Motoboy</h1>
+            <p>Sistema profissional de cálculo de taxas de entrega</p>
         </div>
         
         <div class="form-container">
@@ -228,6 +265,7 @@
                     <option value="">Selecione o tipo de venda</option>
                     <option value="varejo">Varejo</option>
                     <option value="atacado">Atacado - Caixa Alta</option>
+                    <option value="chinelos">Chinelos</option>
                     <option value="transportadora">Caixas para Transportadora</option>
                 </select>
             </div>
@@ -321,7 +359,7 @@
                 </div>
             </div>
 
-            <button onclick="calcularFrete()">🔍 Calcular</button>
+            <button onclick="calcularFrete()">🔍 Calcular Taxa</button>
 
             <div id="resultado" style="display: none;"></div>
         </div>
@@ -402,36 +440,32 @@
 
         document.getElementById('tipoVenda').addEventListener('change', function() {
             const tipo = this.value;
-            const quantideGroup = document.getElementById('quantidadeGroup');
+            const quantidadeGroup = document.getElementById('quantidadeGroup');
             const valorGroup = document.getElementById('valorGroup');
             const dropshippingGroup = document.getElementById('dropshippingGroup');
             const bairroGroup = document.getElementById('bairroGroup');
             const tipoTaxaGroup = document.getElementById('tipoTaxaGroup');
             
+            // Reset all fields
+            quantidadeGroup.style.display = 'none';
+            valorGroup.style.display = 'none';
+            dropshippingGroup.style.display = 'none';
+            bairroGroup.style.display = 'none';
+            tipoTaxaGroup.style.display = 'none';
+            
             if (tipo === 'atacado') {
-                quantideGroup.style.display = 'block';
-                valorGroup.style.display = 'none';
+                quantidadeGroup.style.display = 'block';
                 dropshippingGroup.style.display = 'block';
-                bairroGroup.style.display = 'none';
                 tipoTaxaGroup.style.display = 'block';
             } else if (tipo === 'transportadora') {
-                quantideGroup.style.display = 'block';
-                valorGroup.style.display = 'none';
-                dropshippingGroup.style.display = 'none';
-                bairroGroup.style.display = 'none';
+                quantidadeGroup.style.display = 'block';
                 tipoTaxaGroup.style.display = 'block';
             } else if (tipo === 'varejo') {
-                quantideGroup.style.display = 'none';
-                valorGroup.style.display = 'none';
-                dropshippingGroup.style.display = 'none';
                 bairroGroup.style.display = 'block';
                 tipoTaxaGroup.style.display = 'block';
-            } else {
-                quantideGroup.style.display = 'none';
-                valorGroup.style.display = 'none';
-                dropshippingGroup.style.display = 'none';
-                bairroGroup.style.display = 'none';
-                tipoTaxaGroup.style.display = 'none';
+            } else if (tipo === 'chinelos') {
+                valorGroup.style.display = 'block';
+                tipoTaxaGroup.style.display = 'block';
             }
         });
 
@@ -548,9 +582,13 @@
                     switch(tipoTaxa) {
                         case 'entregador':
                             valorTaxa = taxas.entregador;
-                            // Aplicar regra do dropshipping
-                            if (quantidade <= 2 && !dropshipping) {
-                                valorTaxa = 15;
+                            // Aplicar regras específicas conforme a imagem
+                            if (quantidade <= 2) {
+                                if (dropshipping) {
+                                    valorTaxa = 12; // R$ 12,00 se dropshipping marcado
+                                } else {
+                                    valorTaxa = 15; // R$ 15,00 se dropshipping não marcado
+                                }
                             }
                             nomeTaxa = 'Taxa do Entregador';
                             break;
@@ -584,8 +622,10 @@
 
                     if (quantidade <= 2 && tipoTaxa === 'entregador') {
                         html += `
-                            <div class="observation">
-                                <strong>📝 Observação:</strong> Será cobrado R$ 10,00 somente se o primeiro pedido sair da loja para o cliente Dropshipping. Se o primeiro pedido não sair da loja, a taxa será R$ 15,00.
+                            <div class="info-box">
+                                <strong>📋 Regra para 1 ou 2 pares:</strong><br>
+                                • Será cobrado R$ 12,00 somente se o primeiro pedido sair da loja para o cliente Dropshipping<br>
+                                • Se o primeiro pedido não sair da loja, a taxa será R$ 15,00
                             </div>
                         `;
                     }
@@ -595,6 +635,66 @@
                             <h3>⚠️ Quantidade inválida para Atacado</h3>
                             <div class="warning">
                                 Quantidade máxima para atacado: 11 pares
+                            </div>
+                        </div>
+                    `;
+                }
+            } else if (tipoVenda === 'chinelos') {
+                if (valor === 0) {
+                    alert('Por favor, informe o valor do pedido.');
+                    return;
+                }
+
+                if (!tipoTaxa) {
+                    alert('Por favor, selecione o tipo de taxa.');
+                    return;
+                }
+
+                let valorTaxa = 0;
+                let nomeTaxa = '';
+
+                if (tipoTaxa === 'entregador') {
+                    if (valor <= 79.90) {
+                        valorTaxa = valor; // Valor da taxa é o valor do cliente
+                        nomeTaxa = 'Taxa do Entregador (Valor do Cliente)';
+                    } else {
+                        valorTaxa = 80.00; // Valor fixo de R$ 80,00
+                        nomeTaxa = 'Taxa do Entregador';
+                    }
+
+                    html = `
+                        <div class="result">
+                            <h3>🩴 Resultado - Chinelos (R$ ${valor.toFixed(2)})</h3>
+                            <div class="result-item">
+                                <span class="result-label">${nomeTaxa}:</span>
+                                <span class="result-value">R$ ${valorTaxa.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    `;
+
+                    if (valor <= 79.90) {
+                        html += `
+                            <div class="info-box">
+                                <strong>📋 Regra para Chinelos até R$ 79,90:</strong><br>
+                                O valor para o entregador será o valor da taxa do cliente, acima de R$ 80,00 será pago o valor integral da taxa normalmente.
+                            </div>
+                        `;
+                    }
+                } else if (tipoTaxa === 'site') {
+                    html = `
+                        <div class="result">
+                            <h3>⚠️ Taxa não disponível</h3>
+                            <div class="warning">
+                                Taxa Pedido Site não disponível para Chinelos
+                            </div>
+                        </div>
+                    `;
+                } else if (tipoTaxa === 'troca') {
+                    html = `
+                        <div class="result">
+                            <h3>⚠️ Taxa não disponível</h3>
+                            <div class="warning">
+                                Taxa da Troca não disponível para Chinelos
                             </div>
                         </div>
                     `;
