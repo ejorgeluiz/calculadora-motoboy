@@ -766,4 +766,32 @@
         }
     </script>
 </body>
+      <script>
+    const acesso = localStorage.getItem("autenticado");
+    if (acesso !== "sim") {
+      const senha = prompt("Digite a senha para acessar:");
+      if (senha === "Admin.0258") {
+        localStorage.setItem("autenticado", "sim");
+      } else {
+        alert("Senha incorreta. Redirecionando...");
+        window.location.href = "about:blank";
+      }
+    }
+  </script>
+
+  <h1>Bem-vindo!</h1>
+  <p>Esse conteúdo só aparece após digitar a senha.</p>
+
+  <button onclick="logout()">Sair</button>
+  <script>
+    function logout() {
+      localStorage.removeItem("autenticado");
+      location.reload();
+    }
+
+    function formatarData(data) {
+      return new Date(data + 'T00:00:00').toLocaleDateString('pt-BR');
+    }
+  </script>
+</body>
 </html>
